@@ -1,3 +1,5 @@
+// import { promises as fs } from 'fs'
+
 class Product {
     constructor(title, description, price, thumbnail, code, stock) {
       this.id = 0;
@@ -10,12 +12,13 @@ class Product {
     }
   }
   
-  class ProductManager {
-    constructor() {
+class ProductManager {
+  constructor(path) {
+      this.path = path;
       this.products = [];
-    }
+  }
 
-    addProduct(title, description, price, thumbnail, code, stock) {
+    async addProduct(title, description, price, thumbnail, code, stock) {
 
       // Validar que todos los campos sean obligatorios
       if (!title || !description || !price || !thumbnail || !code || !stock) {
@@ -40,11 +43,11 @@ class Product {
       console.log(`Producto agregado con éxito: ${newProduct.title}`);
     }
   
-    getProducts() {
+    async getProducts() {
       return this.products;
     }
   
-    getProductById(id) {
+    async getProductById(id) {
       const product = this.products.find(product => product.id === id);
       if (!product) {
         console.error(`Error: no se encontró ningún producto con id ${id}`);
@@ -52,9 +55,56 @@ class Product {
       }
       return product;
     }
-  }
+
+    async updateProduct(id, title, description, price, thumbnail, code, stock) {
+      // Encontrar el producto por su ID
+      const productIndex = this.products.findIndex(product => product.id === id);
   
-const productManager = new ProductManager();
+      if (productIndex === -1) {
+        console.error(`Error: no se encontró ningún producto con id ${id}`);
+        return;
+      }
+  
+      // Validar que todos los campos sean obligatorios
+      if (!title || !description || !price || !thumbnail || !code || !stock) {
+        console.error('Error: todos los campos son obligatorios');
+        return;
+      }
+  
+      // Validar que no se repita el campo "code" excepto para el producto que se está actualizando
+      if (this.products.some(product => product.code === code && product.id !== id)) {
+        console.error('Error: ya existe un producto con este código');
+        return;
+      }
+
+      // Actualizar los campos del producto
+      this.products[productIndex].title = title;
+      this.products[productIndex].description = description;
+      this.products[productIndex].price = price;
+      this.products[productIndex].thumbnail = thumbnail;
+      this.products[productIndex].code = code;
+      this.products[productIndex].stock = stock;
+  
+      console.log(`Producto actualizado con éxito: ${title}`);
+    }
+  
+    async deleteProduct(id) {
+      // Encontrar el producto por su ID
+      const productIndex = this.products.findIndex(product => product.id === id);
+  
+      if (productIndex === -1) {
+        console.error(`Error: no se encontró ningún producto con id ${id}`);
+        return;
+      }
+  
+      // Eliminar el producto del arreglo de productos
+      const deletedProduct = this.products.splice(productIndex, 1)[0];
+  
+      console.log(`Producto eliminado con éxito: ${deletedProduct.title}`);
+    }
+}
+  
+const productManager = new ProductManager('./info.txt');
 console.log(productManager.getProducts());
   
 productManager.addProduct("Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", 8);
@@ -87,3 +137,16 @@ console.log(productManager.getProductById(4));
   
 // Obtener un producto por un id inexistente (debe arrojar un error)
 productManager.getProductById(10);
+
+productManager.updateProduct(1, "Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", 9);
+console.log(productManager.getProducts());
+
+// Actualizar un producto no existente
+productManager.updateProduct(10, "Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", 9);
+// Debe mostrar un error ya que el producto con ID 100 no existe
+
+// Eliminar un producto existente
+productManager.deleteProduct(6);
+
+// Eliminar un producto no existente
+productManager.deleteProduct(10);
