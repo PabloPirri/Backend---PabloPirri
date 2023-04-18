@@ -1,7 +1,6 @@
-import { error } from 'console';
 import { promises as fs } from 'fs'
 
-class Product {
+export class Product {
     constructor(title, description, price, thumbnail, code, stock) {
       this.id = 0;
       this.title = title;
@@ -13,7 +12,7 @@ class Product {
     }
   }
   
-class ProductManager {
+export class ProductManager {
   constructor(path) {
       this.path = path;
       this.products = [];
@@ -141,7 +140,7 @@ class ProductManager {
     }
 }
   
-const productManager = new ProductManager('./info.txt');
+const productManager = new ProductManager('./src/info.txt');
 // console.log("inicio proceso");
 // console.log(productManager.getProducts());
 
