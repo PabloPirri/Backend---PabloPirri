@@ -27,8 +27,15 @@ app.get('/product/:id', async (req, res) => {
 })
 
 app.get('/product', async (req, res) => {
+    let { limit } = req.query
     const products = await productManager.getProducts();
-    res.send(JSON.stringify(products))
+    if (products.length < limit) {
+        res.send(`Exedio el limite maximo de productos`)
+    } else {
+        const prodLimit = await products.slice(0, limit)
+        res.send(JSON.stringify(prodLimit))
+    }
+    // res.send(JSON.stringify(products))
 })
 app.listen(PORT, () => {
     console.log(`Server on port ${PORT}`)

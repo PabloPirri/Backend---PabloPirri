@@ -85,16 +85,16 @@ export class ProductManager {
         const prods = await productManager.getProducts();
   
         // Encontrar el producto por su ID
-        const productIndex = prods.findIndex(product => product.id === id);
+        const productIndex = await prods.findIndex(product => product.id === id);
     
         if (productIndex === -1) {
           throw new Error(`Error: no se encontró ningún producto con id ${id}`);
         }
     
-        // Validar que todos los campos sean obligatorios
-        if (!title || !description || !price || !thumbnail || !code || !stock) {
-          throw new Error('Error: todos los campos son obligatorios');
-        }
+        // // Validar que todos los campos sean obligatorios
+        // if (!title || !description || !price || !thumbnail || !code || !stock) {
+        //   throw new Error('Error: todos los campos son obligatorios');
+        // }
     
         // Validar que no se repita el campo "code" excepto para el producto que se está actualizando
         if (prods.some(product => product.code === code && product.id !== id)) {
@@ -123,13 +123,13 @@ export class ProductManager {
         const prods = await productManager.getProducts();
   
         // Encontrar el producto por su ID
-        const productIndex = prods.findIndex(product => product.id === id);
+        const productIndex = await prods.findIndex(product => product.id === id);
     
         if (productIndex === -1) {
           throw error(`Error: no se encontró ningún producto con id ${id}`);
         }
         // Eliminar el producto del arreglo de productos
-        const deletedProduct = prods.splice(productIndex, 1)[0];
+        const deletedProduct = await prods.splice(productIndex, 1)[0];
     
         //Reescribe el archivo consultado con el producto actualizado convertido a String 
         await fs.writeFile(this.path, JSON.stringify(prods))
