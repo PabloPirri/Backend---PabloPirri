@@ -161,35 +161,35 @@ console.log("inicio proceso");
 // Agregar un nuevo producto con el mismo código
 await productManager.addProduct("Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", 8);
 console.log("inicio proceso");
-// Agregar un nuevo producto con campo incompleto
-await productManager.addProduct("Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", );
+// // Agregar un nuevo producto con campo incompleto
+// await productManager.addProduct("Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", );
 
-//Obtener un producto por su id
-console.log("inicio proceso");
-await productManager.getProductById(2);
-console.log("fin proceso");
-
-// Obtener un producto por un id inexistente
-console.log("inicio proceso");
-await productManager.getProductById(10);
-console.log("fin proceso");
-
-console.log("inicio proceso");
-await productManager.updateProduct(1, "Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", 9);
-console.log("fin proceso");
-
-//Actualizar un producto no existente
+// //Obtener un producto por su id
 // console.log("inicio proceso");
-// await productManager.updateProduct(10, "Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", 9);
+// await productManager.getProductById(2);
 // console.log("fin proceso");
 
-// Eliminar un producto existente
-console.log("inicio proceso");
-await productManager.deleteProduct(6);
-console.log("fin proceso");
+// // Obtener un producto por un id inexistente
+// console.log("inicio proceso");
+// await productManager.getProductById(10);
+// console.log("fin proceso");
 
-// Eliminar un producto no existente
-console.log("inicio proceso");
-await productManager.deleteProduct(10);
-console.log("fin proceso");
+// console.log("inicio proceso");
+// await productManager.updateProduct(1, "Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", 9);
+// console.log("fin proceso");
+
+// //Actualizar un producto no existente
+// // console.log("inicio proceso");
+// // await productManager.updateProduct(10, "Alacena", "Mueble de cocina", 50000, "foto_1", "abc123", 9);
+// // console.log("fin proceso");
+
+// // Eliminar un producto existente
+// console.log("inicio proceso");
+// await productManager.deleteProduct(6);
+// console.log("fin proceso");
+
+// // Eliminar un producto no existente
+// console.log("inicio proceso");
+// await productManager.deleteProduct(10);
+// console.log("fin proceso");
 
